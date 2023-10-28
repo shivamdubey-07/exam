@@ -1,27 +1,27 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-
-
-
+const Question=require("../models/question")
 
 
 const authController = {
 
+  signup: async (req, res) => {
+    const { username, password, email } = req.body;
+    const existingUser = await User.findOne({ email }).exec();
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
 
-
-  //login callback funciton for signin page ( i have to change it little bit)
-  login: async (req, res) => {
-    const { username, password,email } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new User();
 
     user.username = username;
-    user.email=email;
-    user.password = password;
-    
-    
-
+    user.email = email;
+    (user.password = hashedPassword),
+    (user.role = "user"),
+    (user.permissions = ["read"]);
 
     user
       .save()
@@ -34,9 +34,57 @@ const authController = {
       });
   },
 
+  login: async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+      const user = await User.findOne({ email }).exec();
+
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        return res.status(401).json({ message: "Authentication failed" });
+      }
+
+      if (user) {
+      
+
+        const token = jwt.sign({ userId: user._id }, process.env.JWTSECRETKEY, {
+          expiresIn: "3h",
+        });
+
+        res.cookie('jwt', token, {
+        
+   
+          maxAge:  3000*60*60, 
+          httpOnly: true, 
+          secure: true,
+            domain: 'localhost',
+
+          
+        });
+       
+        console.log(token)
+        res.json({ success: true, token: token });
+      } else {
+
+        res.status(401).json({ message: "Authentication failed" });
+      }
+    } catch (error) {
+      console.error("Error during authentication:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
+
+  adminDashboard: async (req, res) => {
 
 
-  //for getting all data from database
+    res.send(  req.user)
+  },
+
+
+  
+
+
   getData: async (req, res) => {
     const docs = await User.find({});
     res.json(docs);

@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 
-mongoose.connect("mongodb+srv://shivamdubey:IamMahi07@cluster0.jvlvmfh.mongodb.net/?retryWrites=true&w=majority",{
+mongoose.connect("mongodb+srv://shivamdubey:IamMahi07@cluster0.jvlvmfh.mongodb.net/Exam?retryWrites=true&w=majority",{
     useNewUrlParser:true,
     useUnifiedtopology:true,
 })
