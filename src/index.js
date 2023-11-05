@@ -10,8 +10,8 @@ const cors=require("cors")
 app.use(cookieParser());
 
 const corsOptions = {
-  origin:"http://localhost:3000", //included origin as true
-  credentials: true, //included credentials as true
+  origin:"http://localhost:3000",
+  credentials: true,
 };
 app.use(cors(corsOptions));
 
@@ -21,7 +21,6 @@ app.use(cors(corsOptions));
 
 
 
-// Use the cookie-parser middleware
 
 
 
@@ -41,11 +40,7 @@ app.get("/jwt",(req,res)=>{
 })
 
 
-app.post("/fsfs",(req,res)=>{
-  // console.log(req.body)
-  // res.json(req.body)
-  res.send("send")
-})
+
 
 
 

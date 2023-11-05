@@ -14,7 +14,7 @@ const requireAuth = (req, res, next) => {
       } else {
         req.user = decodedToken;
        console.log("decode token is",decodedToken);
-      //  res.sendStatus(200);
+    
       
         next();
       }
@@ -24,4 +24,4 @@ const requireAuth = (req, res, next) => {
   }
 };
 
-module.exports = requireAuth; // Export the requireAuth middleware
+module.exports = requireAuth; 

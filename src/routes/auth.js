@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const bodyParser = require("body-parser");
 const requireAuth = require("../middlewares/verifytoken");
-const Question = require("../models/question"); // Import your Question model
+const Question = require("../models/question"); 
 const authController = require("../controllers/auth");
 const paperController = require("../controllers/paper");
 const userHasTakenExam=require("../middlewares/hasTakenExam")
@@ -45,14 +45,12 @@ const userData=req.user.userId;
   }
 });
 
-// Add a question
 router.post("/addquestion", requireAuth, async (req, res) => {
   try {
     const { userData } = req.body.myData;
     const questionData = req.body.question;
     console.log("afsa...........fadfa.............fsafa",userData)
 
-    // Find an existing document with the same userData
     const existingQuestion = await Question.findOne({ myData: userData });
 
 
@@ -128,11 +126,9 @@ router.get("/showquestion",verifyStudent,userHasTakenExam, async (req, res) => {
   }
 });
 
-// Update a question
 
 
 
-// Delete a question
 router.delete("/deletequestion/:id", requireAuth, async (req, res) => {
   const questionId = req.params.id;
   const myData=req.user.userId;
