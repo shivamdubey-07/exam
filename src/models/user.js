@@ -25,6 +25,7 @@ const userSchema = new mongoose.Schema({
   permissions: [{
     type: String,
   }],
+  
 
   
 });

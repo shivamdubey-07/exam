@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const cors=require("cors")
 
 
+app.use(cookieParser());
 
 const corsOptions = {
   origin:"http://localhost:3000", //included origin as true
@@ -14,7 +15,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.use(cookieParser());
+
 
 
 
@@ -34,7 +35,10 @@ require("./db/db")
 const authRoutes=require("./routes/auth")
 
 app.use("/api",authRoutes)
-
+app.get("/jwt",(req,res)=>{
+  const t=req.cookies.jwt;
+  console.log("......................................................................................",t);
+})
 
 
 app.post("/fsfs",(req,res)=>{

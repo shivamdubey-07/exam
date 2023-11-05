@@ -16,17 +16,27 @@ const paperController={
 
       // Server-side route to save exam scores
 saveScore: async (req, res) => {
-    const { correctAnswers, wrongAnswers, totalQuestions } = req.body;
+    const { code, totalRight, totalWrong, totalQuestions} = req.body;
     const user=req.user;
     console.log("user is " ,user)
+    console.log("code is " ,code)
+    const scores = await ExamScore.findOne({ email: user.email, code: code });
 
-    
+    if (scores) {
+      // If a score with the provided email and code exists, return a response with a status code
+      return res.status(409).json({ message: "Exam already given" });
+    } 
+
+else{
     const Score = new ExamScore();
-    Score.userId=user.userId
-    Score.correctAnswers = correctAnswers;
-    Score.wrongAnswers = wrongAnswers;
+    Score.code=code
+    Score.email=user.email
+    Score.correctAnswers = totalRight;
+    Score.wrongAnswers = totalWrong;
     Score.totalQuestions = totalQuestions,
    
+
+    
 
     Score
       .save()
@@ -39,19 +49,20 @@ saveScore: async (req, res) => {
       });
   
     // Use your preferred database driver or ORM to save the scores
+}
     
-  
     
   }
 
   ,
   showScore: async (req,res)=>{
     const user=req.user;
-    console.log("yaha wali id is",user.userId)
+    console.log("yaha wali id is",user)
 
   try {
-    const userId=user.userId;
-    const scores = await ExamScore.findOne({ userId: userId }) // Find all exam scores for a specific user
+    const email=user.email;
+    const code=user.code;
+    const scores = await ExamScore.findOne({ email:email,code:code}) // Find all exam scores for a specific user
 
     if (!scores || scores.length === 0) {
       return res.status(404).json({ error: 'Scores not found' });

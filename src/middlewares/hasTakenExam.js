@@ -1,13 +1,14 @@
 const ExamScore = require("../models/examScore");
 
 const userHasTakenExam = async (req, res, next) => {
-  const userId = req.user.userId;
+  const email = req.user.email;
+  const code=req.user.code;
 
 
-  console.log("the id is here broo",userId)
+  console.log("the id is here broo",req.user)
 
   try {
-    const examScore = await ExamScore.findOne({ userId: userId });
+    const examScore = await ExamScore.findOne({ email: email, code:code });
 
   console.log("the exam score is here broo",examScore)
 
