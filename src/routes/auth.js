@@ -9,6 +9,9 @@ const userHasTakenExam=require("../middlewares/hasTakenExam")
 const cookieParser = require('cookie-parser');
 const question = require("../models/question");
 const verifyStudent = require("../middlewares/verifyStudent");
+const ExamScore = require("../models/examScore");
+const nodemailer = require('nodemailer');
+
 
 
 router.use(bodyParser.json());
@@ -150,4 +153,70 @@ router.delete("/deletequestion/:id", requireAuth, async (req, res) => {
   }
 });
 
+
+
+router.delete("/createnewpaper", requireAuth, async (req, res) => {
+  const myData=req.user.userId;
+try{
+  const result=await Question.deleteOne({myData: myData});
+
+  if(result.n==0){
+    return res.status(404).json({ error: "Paper not found." });
+  }
+  res.json({ message: "old Paper delted successfully." });
+
+}
+catch(err) {
+  res.status(500).json({ error: "Error deleting the old paper." });
+}
+})
+
+
+
+router.get("/studentsResults/:code",requireAuth,async (req,res )=>{
+  try {
+    const code = req.params.code;
+    const results = await ExamScore.find({ code: code });
+
+    if (results.length > 0) {
+      res.json(results);
+    } else {
+      res.status(404).json({ error: "No results found for the provided paper code" });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+})
+
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'shivamdubeyfd@gmail.com', 
+    pass: 'aily tdpo aaji rhgn'   
+  }
+});
+
+
+router.post('/send-email', async (req, res) => {
+  try {
+    const { name, email, message } = req.body;
+
+    
+    const mailOptions = {
+      from: email, 
+      to: 'shivamdubeyfd@gmail.com',
+      subject: 'New Contact Form Submission',
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+    };
+
+  
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).json({ message: 'Email sent successfully!' });
+  } catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 module.exports = router;
