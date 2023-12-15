@@ -34,7 +34,6 @@ router.post("/studentLogin",authController.studentLogin)
 
 
 router.delete('/deletePaper',requireAuth, async (req, res) => {
-  console.log("ddddddddddddddddddddddddddddddddddddddddddd",req.user.userId);
 const userData=req.user.userId;
   try {
     await Question.deleteOne({ myData: userData })
@@ -52,12 +51,10 @@ router.post("/addquestion", requireAuth, async (req, res) => {
   try {
     const { userData } = req.body.myData;
     const questionData = req.body.question;
-    console.log("afsa...........fadfa.............fsafa",userData)
 
     const existingQuestion = await Question.findOne({ myData: userData });
 
 
-    console.log("afsa...........fadfa......fsadfffffffffffffffffffffffffffffff.......fsafa",userData)
 
     if (existingQuestion) {
       console.log("yeah saved")
@@ -73,7 +70,6 @@ router.post("/addquestion", requireAuth, async (req, res) => {
       res.json(existingQuestion);
     } else {
    
-      console.log("yaha aagte")
       const newQuestion = new Question({
         myData: userData,
         question: [
@@ -84,7 +80,6 @@ router.post("/addquestion", requireAuth, async (req, res) => {
           },
         ],
       });
-      console.log("yaha bhi aa gye",newQuestion)
 
       await newQuestion.save();
 
@@ -92,7 +87,6 @@ router.post("/addquestion", requireAuth, async (req, res) => {
     }
   } catch (error) {
 
-    console.log("yaha kyu aa rhe bhai",error)
     res.status(500).json({ error: "Error creating the question." });
   }
 });

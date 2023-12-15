@@ -2,8 +2,8 @@ const ExamScore = require("../models/examScore");
 
 const userHasTakenExam = async (req, res, next) => {
   const email = req.user.email;
-  const code=req.user.code;
-
+  
+const code=req.user.code;
 
   console.log("the id is here broo",req.user)
 

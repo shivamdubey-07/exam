@@ -7,6 +7,7 @@ const paperController={
 
         try {
           const questions = await Question.find();
+       
           res.json(questions);
         } catch (err) {
           res.status(500).json({ error: 'Error fetching questions' });
@@ -54,7 +55,6 @@ else{
   ,
   showScore: async (req,res)=>{
     const user=req.user;
-    console.log("yaha wali id is",user)
 
   try {
     const email=user.email;
