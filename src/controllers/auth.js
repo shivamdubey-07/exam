@@ -32,15 +32,14 @@ const authController = {
         expiresIn: "3h",
       });
 
+
+
       res.cookie('studentToken', token, {
       
- 
-        maxAge:  3000*60*60, 
-        httpOnly: true, 
-        secure: true,
-          domain: 'https://exam-proctoring-system.vercel.app',
-          path: '/',
-
+        httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+        secure: true, // Ensure the cookie is sent over HTTPS
+        sameSite: 'None', // Allow cross-site cookies
+        maxAge: 3 * 60 * 60 * 1000, // 3 hours
         
       });
       console.log("student token",token)
