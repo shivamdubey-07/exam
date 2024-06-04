@@ -112,18 +112,11 @@ const authController = {
         });
 
         res.cookie('jwt', token, {
-        
-   
-          maxAge:  3000*60*60, 
-          
-          secure: true,
-
-            
-           
-
-          
-        });
-       
+          httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+          secure: true, // Ensure the cookie is sent over HTTPS
+          sameSite: 'None', // Allow cross-site cookies
+          maxAge: 3 * 60 * 60 * 1000, // 3 hours
+      });
         console.log( token)
         res.json({ success: true, token: token });
       } else {
