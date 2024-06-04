@@ -10,7 +10,7 @@ const cors=require("cors")
 app.use(cookieParser());
 
 const corsOptions = {
-  origin:"https://exam-proctoring-system.vercel.app",
+  origin:"https://examquiz-sepia.vercel.app",
   credentials: true,
 };
 app.use(cors(corsOptions));
