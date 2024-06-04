@@ -115,8 +115,10 @@ const authController = {
         
    
           maxAge:  3000*60*60, 
-         
-          secure: false,
+
+          
+          secure: true,
+
             
            
 
