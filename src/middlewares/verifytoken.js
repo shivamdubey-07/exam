@@ -3,7 +3,7 @@ const secretKey = process.env.JWTSECRETKEY;
 
 const requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
-  console.log("my token is ",token)
+  console.log("my teacher token is ",token)
 
   if (token) {
   console.log("my token in is condition is ",token)
