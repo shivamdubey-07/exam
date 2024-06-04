@@ -10,7 +10,7 @@ const cors=require("cors")
 app.use(cookieParser());
 
 const corsOptions = {
-  origin:"https://examproctoringsystem.vercel.app",
+  origin:"https://examproctoringsystem-972dio5jw-shivams-projects-94319c09.vercel.app",
   credentials: true,
 };
 app.use(cors(corsOptions));
