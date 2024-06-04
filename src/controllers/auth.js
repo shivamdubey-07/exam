@@ -37,8 +37,8 @@ const authController = {
  
         maxAge:  3000*60*60, 
         httpOnly: true, 
-        secure: false,
-          
+        secure: true,
+          domain: 'https://exam-proctoring-system.vercel.app',
           path: '/',
 
         
@@ -115,8 +115,8 @@ const authController = {
         
    
           maxAge:  3000*60*60, 
-        
-          secure: false,
+          domain: 'https://exam-proctoring-system.vercel.app',
+          secure: true,
             
             path: '/',
 
