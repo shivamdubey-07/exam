@@ -115,15 +115,15 @@ const authController = {
         
    
           maxAge:  3000*60*60, 
-          domain: 'https://exam-proctoring-system.vercel.app',
-          secure: true,
+         
+          secure: false,
             
-            path: '/',
+           
 
           
         });
        
-        console.log(token)
+        console.log( token)
         res.json({ success: true, token: token });
       } else {
 
